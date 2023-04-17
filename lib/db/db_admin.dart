@@ -5,39 +5,65 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBAdmin {
-  Database? myDatabase;
+  Database? _myDatabase;
 
-  Future<Database?> checkDatabase() async {
-    if (myDatabase == null) {
-      myDatabase = await initDatabase();
+  static final DBAdmin _instance = DBAdmin._mandarina();
+
+  DBAdmin._mandarina();
+
+  factory DBAdmin(){
+    return _instance;
+  }
+
+  Future<Database?> _checkDatabase() async {
+    if (_myDatabase == null) {
+      _myDatabase = await _initDatabase();
     }
-    return myDatabase;
+    return _myDatabase;
   }
 
   //Crear la base de datos
-  Future<Database> initDatabase() async {
-    print("Iniciando la Base de Datos");
+  Future<Database> _initDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    //print(directory);
     String pathDatabase = join(directory.path, "DBBooks.db");
-    //print(pathDatabase);
-    Future<Database> db = openDatabase(pathDatabase, version: 1,
+    return openDatabase(pathDatabase, version: 1,
         onCreate: (Database db, int version) {
       db.execute(
           "CREATE TABLE BOOK(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT, description TEXT, image TEXT)");
     });
-    print("Fin!!");
-    return db;
   }
 
   //Consultas
+  getBooks() async {
+    Database? db = await _checkDatabase();
+    List data = await db!.rawQuery("SELECT * FROM Book");
+    //print(data);
+    data.forEach((element) {
+      print(element);
+    });
+  }
 
   //Inserciones
-  insertBook() async {
-    Database? db = await checkDatabase();
+  insertBookRaw() async {
+    Database? db = await _checkDatabase();
     db!.rawInsert(
         "INSERT INTO BOOK(title, author, description, image) VALUES ('Agua', 'José Marpia Arguedas', 'Lorem ipsum...', 'https/www.google.com')");
   }
 
-//Actualizaciones
+  insertBook() async {
+    Database? db = await _checkDatabase();
+    db!.insert("BOOK", {
+      "title": "Yawar Fiesta",
+      "author": "José María Arguedas",
+      "description": "Loremmmmmm",
+      "image": "https://www...",
+    }
+    );
+  }
+
+  //Actualizaciones
+  updateBook() async {
+    Database? db = await _checkDatabase();
+
+  }
 }

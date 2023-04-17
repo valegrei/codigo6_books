@@ -14,10 +14,20 @@ class HomePage extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(onPressed: (){
-              DBAdmin admin = DBAdmin();
-              admin.insertBook();
+              // DBAdmin admin = DBAdmin();
+              // admin.insertBook();
+              //DBAdmin().insertBookRaw();
+              DBAdmin().getBooks();
             }, child: Text(
-              "Database",
+              "Select",
+            )),
+            ElevatedButton(onPressed: (){
+              // DBAdmin admin = DBAdmin();
+              // admin.insertBook();
+              //DBAdmin().insertBookRaw();
+              DBAdmin().insertBook();
+            }, child: Text(
+              "Insert",
             )),
           ],
         ),
