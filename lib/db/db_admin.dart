@@ -34,9 +34,18 @@ class DBAdmin {
   }
 
   //Consultas
-  getBooks() async {
+  getBooksRaw() async {
     Database? db = await _checkDatabase();
     List data = await db!.rawQuery("SELECT * FROM Book");
+    //print(data);
+    data.forEach((element) {
+      print(element);
+    });
+  }
+
+  getBooks() async {
+    Database? db = await _checkDatabase();
+    List data = await db!.query("Book", columns: ["id","title"], where: "id = 3");
     //print(data);
     data.forEach((element) {
       print(element);
@@ -62,8 +71,31 @@ class DBAdmin {
   }
 
   //Actualizaciones
+  updateBookRaw() async {
+    Database? db = await _checkDatabase();
+    int value = await db!.rawUpdate("UPDATE Book SET title = 'El zorro de arrbia y el zorro de abajo' WHERE id = 4");
+    print(value);
+  }
+
   updateBook() async {
     Database? db = await _checkDatabase();
+    int value = await db!.update("Book", {
+      "title": "1984",
+    },
+    where: "id = 3");
+    print(value);
+  }
 
+  //Eliminar
+  deleteBookRaw() async {
+    Database? db = await _checkDatabase();
+    int value = await db!.rawDelete("DELETE FROM Book WHERE id = 7");
+    print(value);
+  }
+
+  deleteBook() async {
+    Database? db = await _checkDatabase();
+    int value = await db!.delete("Book", where: "id = 8");
+    print(value);
   }
 }
