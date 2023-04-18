@@ -4,13 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ItemSliderWidget extends StatelessWidget{
-  const ItemSliderWidget({super.key});
+  Map<int, Color> colors = {
+    1 : Color(0xffF8BACF),
+    2 : Color(0xffacdcf2),
+    3 : Color(0xffb2dfdc),
+    4 : Color(0xffe1bee8),
+    5 : Color(0xffc5cae8),
+    6 : Color(0xffffcc80),
+    7 : Color(0xffcaffbf),
+    8 : Color(0xfffdffb6),
+    9 : Color(0xffcdb4db),
+    10 : Color(0xffd8f3dc),
+  };
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     double pyth = sqrt(pow(height, 2) + pow(width, 2));
+
+    int indColor = Random().nextInt(10)+1;
 
     return Container(
       width: pyth * 0.25,
@@ -21,7 +34,7 @@ class ItemSliderWidget extends StatelessWidget{
             width: pyth * 0.25,
             height: pyth * 0.19,
             decoration: BoxDecoration(
-              color: const Color(0xffB2DFDC),
+              color: colors[indColor],
               borderRadius: BorderRadius.circular(12.0),
             ),
             child: Stack(
