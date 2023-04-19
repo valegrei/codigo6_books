@@ -1,12 +1,49 @@
 import 'dart:math';
 
+import 'package:codigo6_books/widgets/common_textfield_widget.dart';
 import 'package:codigo6_books/widgets/item_home_widget.dart';
 import 'package:codigo6_books/widgets/item_slider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  showFormBook() {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              decoration: const BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(36.0),
+                    topRight: Radius.circular(36.0),
+                  )),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("Agregar Libro"),
+                  CommonTextFieldWidget(),
+                  CommonTextFieldWidget(),
+                  CommonTextFieldWidget(),
+                  CommonTextFieldWidget(),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,27 +52,32 @@ class HomePage extends StatelessWidget {
     double pyth = sqrt(pow(height, 2) + pow(width, 2));
 
     return Scaffold(
-      floatingActionButton: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        decoration: BoxDecoration(
-          color: Colors.indigo,
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            Text(
-              "Agregar",
-              style: GoogleFonts.manrope(
-                fontSize: 18.0,
+      floatingActionButton: InkWell(
+        onTap: () {
+          showFormBook();
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          decoration: BoxDecoration(
+            color: const Color(0xff22223b),
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.add,
                 color: Colors.white,
               ),
-            )
-          ],
+              Text(
+                "Agregar",
+                style: GoogleFonts.manrope(
+                  fontSize: 18.0,
+                  color: Colors.white,
+                ),
+              )
+            ],
+          ),
         ),
       ),
       body: Center(
@@ -49,7 +91,7 @@ class HomePage extends StatelessWidget {
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
-                      "https://images.pexels.com/photos/14454202/pexels-photo-14454202.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                      "https://images.freeimages.com/images/large-previews/18d/bookshelf-1617462.jpg",
                     ),
                   ),
                 ),
