@@ -23,22 +23,43 @@ class _HomePageState extends State<HomePage> {
           return Padding(
             padding: MediaQuery.of(context).viewInsets,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               decoration: const BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(36.0),
-                    topRight: Radius.circular(36.0),
-                  )),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text("Agregar Libro"),
-                  CommonTextFieldWidget(),
-                  CommonTextFieldWidget(),
-                  CommonTextFieldWidget(),
-                  CommonTextFieldWidget(),
-                ],
+                color: Colors.amber,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(36.0),
+                  topRight: Radius.circular(36.0),
+                ),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("Agregar Libro"),
+                    CommonTextFieldWidget(
+                      hintText: "Ingresa un título",
+                      icon: Icons.book,
+                      label: "Título",
+                    ),
+                    CommonTextFieldWidget(
+                      hintText: "Ingresa el un autor",
+                      icon: Icons.person,
+                      label: "Autor",
+                    ),
+                    CommonTextFieldWidget(
+                      hintText: "Ingresa el url de la portada",
+                      icon: Icons.image,
+                      label: "Portada",
+                    ),
+                    CommonTextFieldWidget(
+                      hintText: "Ingresa una descripción",
+                      icon: Icons.view_headline,
+                      label: "Descripción",
+                      maxLines: 4,
+                    ),
+                  ],
+                ),
               ),
             ),
           );
