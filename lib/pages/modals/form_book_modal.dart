@@ -3,10 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../widgets/common_textfield_widget.dart';
 
-class FormBookModal extends StatelessWidget {
+class FormBookModal extends StatefulWidget {
+  @override
+  State<FormBookModal> createState() => _FormBookModalState();
+}
+
+class _FormBookModalState extends State<FormBookModal> {
   final TextEditingController _titleController = TextEditingController();
+
   final TextEditingController _authorController = TextEditingController();
+
   final TextEditingController _imageController = TextEditingController();
+
   final TextEditingController _descriptionController = TextEditingController();
 
   final _myFormKey = GlobalKey<FormState>();

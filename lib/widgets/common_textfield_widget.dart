@@ -61,12 +61,23 @@ class CommonTextFieldWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16.0),
                   borderSide: BorderSide.none,
                 ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                  borderSide: BorderSide.none,
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                  borderSide: BorderSide.none,
+                ),
+                errorStyle: GoogleFonts.manrope(),
               ),
               validator: (String? value) {
                 if(value != null && value.isEmpty){
                   return "Campo Obligatorio";
                 }
-                return "aaa";
+                // if(value != null && value.length < 8){
+                //   return "El campo debe de tener más de 8 carácteres";
+                // }
               },
             ),
           ),
