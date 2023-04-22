@@ -1,7 +1,6 @@
 import 'package:codigo6_books/db/db_admin.dart';
 import 'package:codigo6_books/models/book_model.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../widgets/common_textfield_widget.dart';
 
@@ -25,7 +24,7 @@ class _FormBookModalState extends State<FormBookModal> {
     if (_myFormKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.greenAccent,
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
           behavior: SnackBarBehavior.floating,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
@@ -78,9 +77,9 @@ class _FormBookModalState extends State<FormBookModal> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 "Agregar Libro",
-                style: GoogleFonts.manrope(
+                style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -127,9 +126,9 @@ class _FormBookModalState extends State<FormBookModal> {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       "Agregar",
-                      style: GoogleFonts.manrope(
+                      style: TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.w600),
                     )),
               ),

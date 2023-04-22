@@ -4,7 +4,6 @@ import 'package:codigo6_books/pages/modals/form_book_modal.dart';
 import 'package:codigo6_books/widgets/item_home_widget.dart';
 import 'package:codigo6_books/widgets/item_slider_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -46,14 +45,14 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
+            children: const [
+              Icon(
                 Icons.add,
                 color: Colors.white,
               ),
               Text(
                 "Agregar",
-                style: GoogleFonts.manrope(
+                style: TextStyle(
                   fontSize: 18.0,
                   color: Colors.white,
                 ),
@@ -93,14 +92,14 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ]),
                         child: TextField(
-                          style: GoogleFonts.manrope(
+                          style: const TextStyle(
                             fontSize: 14.0,
                           ),
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
                             hintText: "Buscar libro...",
-                            hintStyle: GoogleFonts.manrope(
+                            hintStyle: const TextStyle(
                               fontSize: 14.0,
                             ),
                             suffixIcon: const Icon(
@@ -124,10 +123,10 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.all(22.0),
                         child: Row(
-                          children: [
+                          children: const [
                             Text(
                               "Guarda\ntus libros\nfavoritos",
-                              style: GoogleFonts.manrope(
+                              style: TextStyle(
                                 fontSize: 36.0,
                                 fontWeight: FontWeight.w900,
                                 color: Colors.white,
@@ -148,9 +147,9 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 2.0,
                     ),
-                    Text(
+                    const Text(
                       "Mis libros favoritos",
-                      style: GoogleFonts.manrope(
+                      style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.w600,
                       ),
@@ -174,10 +173,10 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 20.0,
                     ),
-                    Text(
+                    const Text(
                       "Lista General",
                       textAlign: TextAlign.start,
-                      style: GoogleFonts.manrope(
+                      style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.w600,
                       ),

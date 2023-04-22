@@ -1,10 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ItemSliderWidget extends StatelessWidget{
-  Map<int, Color> colors = {
+  Map<int, Color> colors = const {
     1 : Color(0xffF8BACF),
     2 : Color(0xffacdcf2),
     3 : Color(0xffb2dfdc),
@@ -71,12 +70,12 @@ class ItemSliderWidget extends StatelessWidget{
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
-                Text(
+                const Text(
                   "The Lord of the Rings: Chapter 2",
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.manrope(
+                  style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                     height: 1.0,
@@ -90,7 +89,7 @@ class ItemSliderWidget extends StatelessWidget{
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.manrope(
+                  style: TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w500,
                     color: Colors.black.withOpacity(0.65),

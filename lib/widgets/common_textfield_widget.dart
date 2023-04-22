@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CommonTextFieldWidget extends StatelessWidget {
   String hintText;
@@ -24,7 +23,7 @@ class CommonTextFieldWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("$label:",
-          style: GoogleFonts.manrope(
+          style: const TextStyle(
             fontWeight: FontWeight.w600,
           ),),
           const SizedBox(
@@ -43,7 +42,6 @@ class CommonTextFieldWidget extends StatelessWidget {
             child: TextFormField(
               controller: controller,
               maxLines: maxLines ?? 1,
-              style: GoogleFonts.manrope(),
               decoration: InputDecoration(
                 hintText: hintText,
                 filled: true,
@@ -69,7 +67,6 @@ class CommonTextFieldWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16.0),
                   borderSide: BorderSide.none,
                 ),
-                errorStyle: GoogleFonts.manrope(),
               ),
               validator: (String? value) {
                 if(value != null && value.isEmpty){
