@@ -1,3 +1,5 @@
+import 'package:codigo6_books/db/db_admin.dart';
+import 'package:codigo6_books/models/book_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,6 +20,35 @@ class _FormBookModalState extends State<FormBookModal> {
   final TextEditingController _descriptionController = TextEditingController();
 
   final _myFormKey = GlobalKey<FormState>();
+
+  void registerBook(){
+    if(_myFormKey.currentState!.validate()){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            backgroundColor: Colors.greenAccent,
+            duration: Duration(seconds: 3),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0)
+            ),
+            content: Text("Hola"))
+      );
+      BookModel myBook = BookModel(
+        title: _titleController.text,
+        author: _authorController.text,
+        description: _descriptionController.text,
+        image: _imageController.text,
+      );
+      DBAdmin().insertBook(myBook).then((value){
+        if(value > 0){
+          //Se agrego el libro correctamente
+          Navigator.pop(context);
+        }else{}
+      }).catchError((error){
+        print(error);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +108,7 @@ class _FormBookModalState extends State<FormBookModal> {
                 child: ElevatedButton(
                     onPressed: () {
                       //Guardar los datos del libro
-                      _myFormKey.currentState?.validate();
+                      registerBook();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff22223b),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:codigo6_books/models/book_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -59,15 +60,9 @@ class DBAdmin {
         "INSERT INTO BOOK(title, author, description, image) VALUES ('Agua', 'José Marpia Arguedas', 'Lorem ipsum...', 'https/www.google.com')");
   }
 
-  insertBook() async {
+  Future<int> insertBook(BookModel model) async {
     Database? db = await _checkDatabase();
-    db!.insert("BOOK", {
-      "title": "Yawar Fiesta",
-      "author": "José María Arguedas",
-      "description": "Loremmmmmm",
-      "image": "https://www...",
-    }
-    );
+    return db!.insert("BOOK", model.toJson());
   }
 
   //Actualizaciones
