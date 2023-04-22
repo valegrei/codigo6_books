@@ -21,30 +21,41 @@ class _FormBookModalState extends State<FormBookModal> {
 
   final _myFormKey = GlobalKey<FormState>();
 
-  void registerBook(){
-    if(_myFormKey.currentState!.validate()){
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            backgroundColor: Colors.greenAccent,
-            duration: Duration(seconds: 3),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0)
-            ),
-            content: Text("Hola"))
-      );
+  void registerBook() {
+    if (_myFormKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.greenAccent,
+          duration: Duration(seconds: 3),
+          behavior: SnackBarBehavior.floating,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          content: Row(
+            children: const [
+              Icon(
+                Icons.check,
+                color: Colors.white,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Expanded(
+                  child: Text(
+                "El libro se registró correctamente",
+              )),
+            ],
+          )));
       BookModel myBook = BookModel(
         title: _titleController.text,
         author: _authorController.text,
         description: _descriptionController.text,
         image: _imageController.text,
       );
-      DBAdmin().insertBook(myBook).then((value){
-        if(value > 0){
+      DBAdmin().insertBook(myBook).then((value) {
+        if (value > 0) {
           //Se agrego el libro correctamente
           Navigator.pop(context);
-        }else{}
-      }).catchError((error){
+        } else {}
+      }).catchError((error) {
         print(error);
       });
     }
