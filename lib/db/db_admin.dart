@@ -46,7 +46,10 @@ class DBAdmin {
 
   Future<List<BookModel>> getBooks() async {
     Database? db = await _checkDatabase();
-    List<Map<String, dynamic>> data = await db!.query("Book");
+    List<Map<String, dynamic>> data = await db!.query(
+        "Book",
+        orderBy: "id DESC",
+    );
     List<BookModel> books = data.map((e) => BookModel.fromJson(e)).toList();
     return books;
   }

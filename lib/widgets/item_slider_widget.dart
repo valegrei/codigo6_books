@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:codigo6_books/models/book_model.dart';
 import 'package:flutter/material.dart';
 
 class ItemSliderWidget extends StatelessWidget{
@@ -15,6 +16,10 @@ class ItemSliderWidget extends StatelessWidget{
     9 : Color(0xffcdb4db),
     10 : Color(0xffd8f3dc),
   };
+
+  BookModel book;
+
+  ItemSliderWidget({required this.book});
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +59,10 @@ class ItemSliderWidget extends StatelessWidget{
                           offset: const Offset(4, 4),
                         ),
                       ],
-                      image: const DecorationImage(
+                      image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                          "https://images1.penguinrandomhouse.com/cover/9780593500484",
+                          book.image,
                         ),
                       ),
                     ),
@@ -70,12 +75,12 @@ class ItemSliderWidget extends StatelessWidget{
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
-                const Text(
-                  "The Lord of the Rings: Chapter 2",
+                Text(
+                  book.title,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                     height: 1.0,
@@ -85,7 +90,7 @@ class ItemSliderWidget extends StatelessWidget{
                   height: 6.0,
                 ),
                 Text(
-                  "JRR Tolkien",
+                  book.author,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   textAlign: TextAlign.center,
