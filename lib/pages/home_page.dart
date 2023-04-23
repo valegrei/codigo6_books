@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:codigo6_books/db/db_admin.dart';
+import 'package:codigo6_books/models/book_model.dart';
 import 'package:codigo6_books/pages/modals/form_book_modal.dart';
 import 'package:codigo6_books/widgets/item_home_widget.dart';
 import 'package:codigo6_books/widgets/item_slider_widget.dart';
@@ -184,12 +186,42 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 20.0,
                     ),
-                    ItemHomeWidget(),
-                    ItemHomeWidget(),
-                    ItemHomeWidget(),
-                    ItemHomeWidget(),
-                    ItemHomeWidget(),
-                    ItemHomeWidget(),
+                    FutureBuilder(
+                      future: DBAdmin().getBooks(),
+                      builder: (BuildContext context, AsyncSnapshot snap) {
+                        if (snap.hasData) {
+                          List<BookModel> books = snap.data;
+                          return books.isNotEmpty
+                              ? ListView.builder(
+                                  itemCount: books.length,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return ItemHomeWidget(book: books[index]);
+                                  },
+                                )
+                              : Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/box.png",
+                                          height: pyth * 0.1,
+                                        ),
+                                        const SizedBox(height: 8.0,),
+                                        const Text(
+                                          "Por favor registra tu primer libro.",
+                                        ),
+                                      ],
+                                    ),
+                                ),
+                              );
+                        }
+                        return CircularProgressIndicator();
+                      },
+                    ),
                     const SizedBox(
                       height: 40.0,
                     ),

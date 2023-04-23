@@ -44,13 +44,11 @@ class DBAdmin {
     });
   }
 
-  getBooks() async {
+  Future<List<BookModel>> getBooks() async {
     Database? db = await _checkDatabase();
-    List data = await db!.query("Book", columns: ["id","title"], where: "id = 3");
-    //print(data);
-    data.forEach((element) {
-      print(element);
-    });
+    List<Map<String, dynamic>> data = await db!.query("Book");
+    List<BookModel> books = data.map((e) => BookModel.fromJson(e)).toList();
+    return books;
   }
 
   //Inserciones

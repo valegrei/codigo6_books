@@ -12,9 +12,16 @@ class BookModel {
   });
 
   Map<String, dynamic> toJson() => {
-    "title": title,
-    "author": author,
-    "description": description,
-    "image": image,
-  };
+        "title": title,
+        "author": author,
+        "description": description,
+        "image": image,
+      };
+
+  factory BookModel.fromJson(Map<String, dynamic> json) => BookModel(
+        title: json["title"],
+        author: json["author"],
+        description: json["description"],
+        image: json["image"],
+      );
 }

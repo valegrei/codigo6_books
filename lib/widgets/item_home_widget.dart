@@ -1,8 +1,13 @@
 import 'dart:math';
 
+import 'package:codigo6_books/models/book_model.dart';
 import 'package:flutter/material.dart';
 
 class ItemHomeWidget extends StatelessWidget {
+  BookModel book;
+
+  ItemHomeWidget({required this.book});
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -18,7 +23,7 @@ class ItemHomeWidget extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
             child: Image.network(
-              "https://images1.penguinrandomhouse.com/cover/9780593500484",
+              book.image,
               width: pyth * 0.12,
               height: pyth * 0.16,
               fit: BoxFit.cover,
@@ -31,16 +36,16 @@ class ItemHomeWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "The Lord of the Rings",
-                  style: TextStyle(
+                Text(
+                  book.title,
+                  style: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const Text(
-                  "JRR Tolkien",
-                  style: TextStyle(
+                Text(
+                  book.author,
+                  style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
                   ),
@@ -49,7 +54,7 @@ class ItemHomeWidget extends StatelessWidget {
                   height: 6.0,
                 ),
                 Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                  book.description,
                   style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w500,
