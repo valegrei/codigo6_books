@@ -5,6 +5,14 @@ import 'package:flutter/material.dart';
 import '../../widgets/common_textfield_widget.dart';
 
 class FormBookModal extends StatefulWidget {
+  BookModel? book;
+  bool isRegister;
+
+  FormBookModal({
+    this.book,
+    required this.isRegister,
+  });
+
   @override
   State<FormBookModal> createState() => _FormBookModalState();
 }
@@ -20,29 +28,34 @@ class _FormBookModalState extends State<FormBookModal> {
 
   final _myFormKey = GlobalKey<FormState>();
 
+  void showSuccess() {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.greenAccent,
+        duration: const Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+        content: Row(
+          children: [
+            const Icon(
+              Icons.check,
+              color: Colors.white,
+            ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            Expanded(
+                child: Text(
+              widget.isRegister
+                  ? "El libro se registró correctamente"
+                  : "El libro se actualizó correctamente",
+            )),
+          ],
+        )));
+  }
+
   void registerBook() {
     if (_myFormKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.greenAccent,
-          duration: const Duration(seconds: 3),
-          behavior: SnackBarBehavior.floating,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-          content: Row(
-            children: const [
-              Icon(
-                Icons.check,
-                color: Colors.white,
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              Expanded(
-                  child: Text(
-                "El libro se registró correctamente",
-              )),
-            ],
-          )));
       BookModel myBook = BookModel(
         title: _titleController.text,
         author: _authorController.text,
@@ -53,10 +66,45 @@ class _FormBookModalState extends State<FormBookModal> {
         if (value > 0) {
           //Se agrego el libro correctamente
           Navigator.pop(context);
-        } else {}
+          showSuccess();
+        } else {
+        }
       }).catchError((error) {
         print(error);
       });
+    }
+  }
+
+  void updateBook() {
+    if (_myFormKey.currentState!.validate()) {
+      BookModel myBook = BookModel(
+        id: widget.book!.id,
+        title: _titleController.text,
+        author: _authorController.text,
+        description: _descriptionController.text,
+        image: _imageController.text,
+      );
+      DBAdmin().updateBook(myBook).then((value) {
+        if (value > 0) {
+          //Se agrego el libro correctamente
+          Navigator.pop(context);
+          showSuccess();
+        } else {
+        }
+      }).catchError((error) {
+        print(error);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (!widget.isRegister) {
+      _titleController.text = widget.book!.title;
+      _authorController.text = widget.book!.author;
+      _descriptionController.text = widget.book!.description;
+      _imageController.text = widget.book!.image;
     }
   }
 
@@ -77,9 +125,9 @@ class _FormBookModalState extends State<FormBookModal> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                "Agregar Libro",
-                style: TextStyle(
+              Text(
+                widget.isRegister ? "Agregar Libro" : "Actualizar Libro",
+                style: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -118,7 +166,11 @@ class _FormBookModalState extends State<FormBookModal> {
                 child: ElevatedButton(
                     onPressed: () {
                       //Guardar los datos del libro
-                      registerBook();
+                      if(widget.isRegister) {
+                        registerBook();
+                      }else{
+                        updateBook();
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff22223b),
@@ -126,9 +178,9 @@ class _FormBookModalState extends State<FormBookModal> {
                         borderRadius: BorderRadius.circular(14.0),
                       ),
                     ),
-                    child: const Text(
-                      "Agregar",
-                      style: TextStyle(
+                    child: Text(
+                      widget.isRegister ? "Agregar" : "Actualizar",
+                      style: const TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.w600),
                     )),
               ),

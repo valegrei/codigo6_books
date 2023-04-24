@@ -73,13 +73,9 @@ class DBAdmin {
     print(value);
   }
 
-  updateBook() async {
+  Future<int> updateBook(BookModel book) async {
     Database? db = await _checkDatabase();
-    int value = await db!.update("Book", {
-      "title": "1984",
-    },
-    where: "id = 3");
-    print(value);
+    return db!.update("Book", book.toJson(), where: "id = ${book.id}");
   }
 
   //Eliminar
@@ -89,9 +85,8 @@ class DBAdmin {
     print(value);
   }
 
-  deleteBook() async {
+  Future<int> deleteBook(int id) async {
     Database? db = await _checkDatabase();
-    int value = await db!.delete("Book", where: "id = 8");
-    print(value);
+    return db!.delete("Book", where: "id = $id");
   }
 }

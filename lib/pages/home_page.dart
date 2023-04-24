@@ -15,6 +15,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  BookModel? bookTemp;
+  bool isRegister = true;
+
   showFormBook() {
     showModalBottomSheet(
         context: context,
@@ -23,8 +26,74 @@ class _HomePageState extends State<HomePage> {
         builder: (BuildContext context) {
           return Padding(
             padding: MediaQuery.of(context).viewInsets,
-            child: FormBookModal(),
+            child: FormBookModal(
+              isRegister: isRegister,
+              book: bookTemp,
+            ),
           );
+        }).then((value) {
+      setState(() {});
+    });
+  }
+
+  showDeleteDialog(int id) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text("Atención"),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  const Text("¿Desea eliminar este libro?"),
+                  const SizedBox(
+                    height: 12.0,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            "Cancelar",
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 6.0,
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            DBAdmin().deleteBook(id).then((value) {
+                              if (value >= 0) {
+                                Navigator.pop(context);
+                                setState(() {});
+                                //SnackBar
+                              }
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xff22223b),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14.0),
+                              )),
+                          child: const Text("Eliminar"),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ));
         });
   }
 
@@ -37,6 +106,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       floatingActionButton: InkWell(
         onTap: () {
+          bookTemp = null;
+          isRegister = true;
           showFormBook();
         },
         child: Container(
@@ -171,8 +242,8 @@ class _HomePageState extends State<HomePage> {
                                     child: Row(
                                       children: books
                                           .map((book) => ItemSliderWidget(
-                                        book: book,
-                                      ))
+                                                book: book,
+                                              ))
                                           .toList(),
                                     ),
                                   ),
@@ -197,7 +268,17 @@ class _HomePageState extends State<HomePage> {
                                         const NeverScrollableScrollPhysics(),
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      return ItemHomeWidget(book: books[index]);
+                                      return ItemHomeWidget(
+                                        book: books[index],
+                                        onDelete: () {
+                                          showDeleteDialog(books[index].id!);
+                                        },
+                                        onUpdate: () {
+                                          bookTemp = books[index];
+                                          isRegister = false;
+                                          showFormBook();
+                                        },
+                                      );
                                     },
                                   ),
                                   const SizedBox(
